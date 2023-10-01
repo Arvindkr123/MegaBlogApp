@@ -13,6 +13,7 @@ const Login = () => {
   const [error, setError] = useState("");
 
   const login = async (data) => {
+    console.log(data);
     setError("");
     try {
       const session = await authService.login(data);
@@ -48,7 +49,7 @@ const Login = () => {
           </Link>{" "}
         </p>
         {error && <p className="text-red-600 mt-8 text-center">{error}</p>}
-        <form onSubmit={() => handleSubmit(login)} className="mt-8">
+        <form onSubmit={handleSubmit(login)} className="mt-8">
           <div className="space-y-3">
             <Input
               label="Email :"

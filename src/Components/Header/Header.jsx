@@ -16,7 +16,7 @@ const Header = () => {
     { name: "Add Post", slug: "/add-post", active: authStatus },
   ];
   return (
-    <header className="py-3 shadow bg-gray-500">
+    <header className="py-3 shadow bg-gray-500 fixed top-0 w-full">
       <Container>
         <nav className="flex items-center">
           <div>

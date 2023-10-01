@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import databaseService from "../appwrite/Config";
 import { Button, Container } from "../Components";
-import { parse } from "postcss";
+import parse from "html-react-parser";
 
 const Post = () => {
   const [post, setPost] = useState(null);

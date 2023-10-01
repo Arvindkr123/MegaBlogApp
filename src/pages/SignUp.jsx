@@ -3,7 +3,7 @@ import { SignUp as SignUpComponent } from "../Components";
 
 const SignUp = () => {
   return (
-    <div className="py-8">
+    <div className="pt-16 pb-6">
       <SignUpComponent />
     </div>
   );

@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import authService from "./appwrite/auth";
 import { login, logout } from "./store/authSlice";
 import { Footer, Header } from "./Components";
+import { Outlet } from "react-router-dom";
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -22,10 +23,10 @@ function App() {
       });
   }, []);
   return !loading ? (
-    <div className="min-h-screen flex flex-wrap items-center justify-between bg-gray-400">
+    <div className="h-screen flex flex-wrap items-center justify-between bg-gray-400">
       <div className="w-full block text-center">
         <Header />
-        <main></main>
+        <Outlet />
         <Footer />
       </div>
     </div>
