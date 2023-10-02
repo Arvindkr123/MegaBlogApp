@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import authService from "./appwrite/auth";
 import { login, logout } from "./store/authSlice";
 import { Footer, Header } from "./Components";
 import { Outlet } from "react-router-dom";
 
 function App() {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   useEffect(() => {
     authService
@@ -18,7 +18,7 @@ function App() {
           dispatch(logout());
         }
       })
-      .finally((error) => {
+      .finally(() => {
         setLoading(false);
       });
   }, []);
@@ -26,7 +26,9 @@ function App() {
     <div className="h-screen flex flex-wrap items-center justify-between bg-gray-400">
       <div className="w-full block text-center">
         <Header />
-        <Outlet />
+        <main>
+          <Outlet />
+        </main>
         <Footer />
       </div>
     </div>

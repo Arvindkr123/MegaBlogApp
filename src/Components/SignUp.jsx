@@ -5,6 +5,7 @@ import { Button, Input, Logo } from "./index";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { login } from "../store/authSlice";
+
 const SignUp = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -12,10 +13,12 @@ const SignUp = () => {
   const { register, handleSubmit } = useForm();
 
   const create = async (data) => {
+    console.log("hello from sign up");
     setError("");
     console.log(data);
     try {
       const userData = await authService.createAccount(data);
+      console.log(userData);
       if (userData) {
         const userData = await authService.getCurrentUser();
         if (userData) dispatch(login(userData));
@@ -26,7 +29,7 @@ const SignUp = () => {
     }
   };
   return (
-    <div className="flex items-center justify-center w-full">
+    <div className="flex items-center justify-center">
       <div
         className={`mx-auto w-full max-w-lg bg-gray-100 rounded-xl p-10 border border-black/10`}
       >
@@ -49,12 +52,19 @@ const SignUp = () => {
         </p>
         {error && <p className="text-red-600 mt-8 text-center">{error}</p>}
         <form onSubmit={handleSubmit(create)}>
-          <div className="space-y-3">
+          <div className="space-y-5">
             <Input
-              type="text"
               label="Full Name: "
-              palceholder="enter your name"
+              palceholder="Enter your full name"
               {...register("name", {
+                required: true,
+              })}
+            />
+            <Input
+              label="Email :"
+              placeholder="Enter your full name"
+              type="email"
+              {...register("email", {
                 required: true,
                 validate: {
                   matchPatern: (value) =>
@@ -64,29 +74,15 @@ const SignUp = () => {
               })}
             />
             <Input
-              label="Email :"
-              placeholder="enter your email"
-              type="email"
-              {...register("email", {
-                required: true,
-                validate: {
-                  matchPatern: (value) =>
-                    /b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/.test(
-                      value
-                    ) || "Email address must be valid",
-                },
-              })}
-            />
-            <Input
               label="Password: "
               type="password"
-              placeholder="enter your password"
+              placeholder="Enter your password"
               {...register("password", {
                 required: true,
               })}
             />
             <Button type="submit" className="w-full">
-              Create a account
+              Create Account
             </Button>
           </div>
         </form>

@@ -33,7 +33,7 @@ class DatabaseService {
     }
   }
 
-  async updatePost(slug, { title, content, status, userId, featuredImage }) {
+  async updatePost(slug, { title, content, status, featuredImage }) {
     try {
       return await this.databases.updateDocument(
         config.appwriteDatabaseId,
@@ -42,9 +42,8 @@ class DatabaseService {
         {
           title,
           content,
-          status,
-          userId,
           featuredImage,
+          status,
         }
       );
     } catch (error) {
@@ -68,7 +67,7 @@ class DatabaseService {
 
   async getPost(slug) {
     try {
-      return this.databases.getDocument(
+      return await this.databases.getDocument(
         config.appwriteDatabaseId,
         config.appwriteCollectionId,
         slug
@@ -80,7 +79,7 @@ class DatabaseService {
 
   async getPosts(queries = [Query.equal("status", "active")]) {
     try {
-      return this.databases.listDocuments(
+      return await this.databases.listDocuments(
         config.appwriteDatabaseId,
         config.appwriteCollectionId,
         queries

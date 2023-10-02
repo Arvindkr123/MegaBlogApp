@@ -10,7 +10,7 @@ const PostForm = ({ post }) => {
     useForm({
       defaultValues: {
         title: post?.title || "",
-        slug: post?.slug || "",
+        slug: post?.$id || "",
         content: post?.content || "",
         status: post?.status || "active",
       },
@@ -21,7 +21,7 @@ const PostForm = ({ post }) => {
   const submit = async (data) => {
     if (post) {
       const file = data.image[0]
-        ? databaseService.uploadFile(data.image[0])
+        ? await databaseService.uploadFile(data.image[0])
         : null;
 
       if (file) {
@@ -50,6 +50,7 @@ const PostForm = ({ post }) => {
     }
   };
 
+  // this function for that purpose if user type the url in upper case and lower case
   const slugTransform = useCallback((value) => {
     if (value && typeof value === "string") {
       return value
@@ -65,7 +66,9 @@ const PostForm = ({ post }) => {
   useEffect(() => {
     const subscription = watch((value, { name }) => {
       if (name === "title") {
-        setValue("slug", slugTransform(value.title, { shouldValidate: true }));
+        setValue("slug", slugTransform(value.title), {
+          shouldValidate: true,
+        });
       }
     });
     return () => {
@@ -105,7 +108,7 @@ const PostForm = ({ post }) => {
       </div>
       <div className="w-1/3 px-2">
         <Input
-          label={"Featured Image"}
+          label={"Featured Image : "}
           type="file"
           className="mb-4"
           accept="image/png, image/jpg, image/jpeg, image/gif "

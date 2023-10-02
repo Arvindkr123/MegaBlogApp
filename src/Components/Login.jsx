@@ -13,7 +13,7 @@ const Login = () => {
   const [error, setError] = useState("");
 
   const login = async (data) => {
-    console.log(data);
+    console.log("from login data ", data);
     setError("");
     try {
       const session = await authService.login(data);
@@ -50,25 +50,24 @@ const Login = () => {
         </p>
         {error && <p className="text-red-600 mt-8 text-center">{error}</p>}
         <form onSubmit={handleSubmit(login)} className="mt-8">
-          <div className="space-y-3">
+          <div className="space-y-5">
             <Input
-              label="Email :"
-              placeholder="enter your email"
+              label="Email: "
+              placeholder="Enter your email"
               type="email"
               {...register("email", {
                 required: true,
                 validate: {
                   matchPatern: (value) =>
-                    /b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/.test(
-                      value
-                    ) || "Email address must be valid",
+                    /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value) ||
+                    "Email address must be a valid address",
                 },
               })}
             />
             <Input
               label="Password: "
               type="password"
-              placeholder="enter your password"
+              placeholder="Enter your password"
               {...register("password", {
                 required: true,
               })}
