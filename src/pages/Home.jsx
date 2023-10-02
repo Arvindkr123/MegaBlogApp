@@ -5,9 +5,9 @@ import databaseService from "../appwrite/Config";
 const Home = () => {
   const [posts, setPosts] = useState([]);
   useEffect(() => {
-    databaseService.getPosts().then((post) => {
-      if (post) {
-        setPosts(post.documents);
+    databaseService.getPosts().then((posts) => {
+      if (posts) {
+        setPosts(posts.documents);
       }
     });
   }, []);
@@ -18,7 +18,7 @@ const Home = () => {
           <div className="flex flex-wrap">
             <div className="p-2 w-full">
               <h1 className="text-2xl font-bold hover:text-gray-500">
-                Login to read posts
+                Login to read posts or create posts
               </h1>
             </div>
           </div>
@@ -31,7 +31,7 @@ const Home = () => {
         <div className="flex flex-wrap">
           {posts.map((post) => {
             return (
-              <div className="p-2 w-1/4">
+              <div key={post.$id} className="p-2 w-1/4">
                 {/* <PostCard post={post} /> */}
                 <PostCard {...post} />
               </div>
